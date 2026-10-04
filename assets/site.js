@@ -83,63 +83,33 @@
 
   const partnerGroups = {
     home: {
-      eyebrow: 'Ils nous font confiance',
-      title: 'Des organisations qui font progresser la géomatique.',
-      intro: 'Géomont accompagne des MRC, municipalités, organismes environnementaux et organisations agricoles dans la compréhension et la mise en valeur du territoire.',
       marks: [clientLogos.brome, clientLogos.sources, clientLogos.roussillon, clientLogos.marguerite, clientLogos.vaudreuil, clientLogos.granby, clientLogos.crem, clientLogos.maska, clientLogos.fusion]
     },
     mrc: {
-      eyebrow: 'MRC clientes',
-      title: 'Des collaborations régionales concrètes.',
-      intro: 'Ces MRC font partie des organisations qui s’appuient sur des données territoriales, des cartes et des analyses pour mieux planifier et décider.',
       marks: [clientLogos.brome, clientLogos.sources, clientLogos.roussillon, clientLogos.marguerite, clientLogos.vaudreuil]
     },
     municipalites: {
-      eyebrow: 'Municipalités et partenaires régionaux',
-      title: 'Des données utiles aux équipes municipales.',
-      intro: 'Les mandats de géomatique municipale s’inscrivent dans un écosystème de villes et de MRC qui partagent les mêmes enjeux d’aménagement et de services aux citoyens.',
       marks: [clientLogos.granby, clientLogos.roussillon, clientLogos.marguerite, clientLogos.vaudreuil, clientLogos.brome]
     },
     urbanistes: {
-      eyebrow: 'Collaborations territoriales',
-      title: 'Des données qui soutiennent les démarches d’urbanisme.',
-      intro: 'En attendant l’ajout de logos de firmes d’urbanisme clientes, ce bandeau présente les organisations clientes les plus proches de ces mandats.',
       marks: [clientLogos.granby, clientLogos.roussillon, clientLogos.marguerite, clientLogos.vaudreuil, clientLogos.brome]
     },
     promoteurs: {
-      eyebrow: 'Collaborations territoriales',
-      title: 'La préanalyse de terrain, appuyée par des données fiables.',
-      intro: 'Ces organisations clientes illustrent le contexte territorial dans lequel des données géospatiales solides accélèrent l’analyse de contraintes et d’occasions.',
       marks: [clientLogos.granby, clientLogos.brome, clientLogos.roussillon, clientLogos.marguerite, clientLogos.vaudreuil]
     },
     arpenteurs: {
-      eyebrow: 'Collaborations territoriales',
-      title: 'Une base de données utile aux relevés et aux dossiers fonciers.',
-      intro: 'En attendant l’ajout de logos de cabinets d’arpenteurs-géomètres clients, ce bandeau présente les organisations clientes qui évoluent dans les mêmes territoires.',
       marks: [clientLogos.brome, clientLogos.sources, clientLogos.roussillon, clientLogos.marguerite, clientLogos.granby]
     },
     genie: {
-      eyebrow: 'Génie, environnement et territoire',
-      title: 'Des repères concrets pour les études de terrain.',
-      intro: 'Les données LiDAR, les orthophotos et les analyses thématiques relient les besoins des organisations environnementales, municipales et régionales.',
       marks: [clientLogos.crem, clientLogos.granby, clientLogos.brome, clientLogos.sources, clientLogos.roussillon]
     },
     agriculture: {
-      eyebrow: 'Agriculture et agroenvironnement',
-      title: 'Des données pour mieux comprendre les sols et les parcelles.',
-      intro: 'En attendant l’ajout de logos de producteurs agricoles clients, ce bandeau présente les organisations les plus proches de l’écosystème agricole de Géomont.',
       marks: [clientLogos.maska, clientLogos.fusion, clientLogos.vaudreuil, clientLogos.brome, clientLogos.crem]
     },
     reseaux: {
-      eyebrow: 'Infrastructures et territoires',
-      title: 'Des données cohérentes pour les actifs et les corridors.',
-      intro: 'Les organisations clientes ci-dessous illustrent le contexte municipal et régional dans lequel la qualité des données facilite la gestion des réseaux.',
       marks: [clientLogos.granby, clientLogos.roussillon, clientLogos.marguerite, clientLogos.vaudreuil, clientLogos.brome]
     },
     obnl: {
-      eyebrow: 'Milieux naturels et environnement',
-      title: 'Des données au service de la protection du territoire.',
-      intro: 'Les cartes et analyses de Géomont aident les organisations environnementales, les MRC et les municipalités à communiquer et à agir sur des enjeux concrets.',
       marks: [clientLogos.crem, clientLogos.brome, clientLogos.sources, clientLogos.roussillon, clientLogos.marguerite]
     }
   };

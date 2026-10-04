@@ -276,7 +276,7 @@ button { cursor: pointer; }
 .section.compact { padding: 56px 0; }
 .section.tint { background: var(--green-soft); }
 .section.dark { color: var(--white); background: var(--forest); }
-.section.dark .muted, .section.dark .section-intro { color: rgba(255,255,255,.74); }
+.section.dark .muted { color: rgba(255,255,255,.74); }
 .section-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -285,7 +285,6 @@ button { cursor: pointer; }
   margin-bottom: 32px;
 }
 .section-head .display { max-width: 25ch; font-size: clamp(2rem, 3.6vw, 3.35rem); line-height: 1.08; }
-.section-intro { margin: 0; color: var(--muted); font-size: 1.07rem; }
 .section p { max-width: 72ch; }
 .two-col {
   display: grid;
