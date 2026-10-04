@@ -1,5 +1,7 @@
 # Géomont
 
+La marque s’écrit GéoMont, en un seul mot.
+
 Géomont est une organisation québécoise qui aide les municipalités, MRC, professionnels, organisations agricoles, organismes environnementaux et entreprises à comprendre leur territoire grâce aux données géospatiales, aux analyses, aux cartes et aux plateformes web.
 
 ## Principaux services
@@ -17,6 +19,7 @@ Géomont est une organisation québécoise qui aide les municipalités, MRC, pro
 - Données, LiDAR et cartes : https://www.geomont.qc.ca/donnees-cartes/
 - Projets : https://www.geomont.qc.ca/projets/
 - FAQ : https://www.geomont.qc.ca/faq/
+- Nouvelles : https://www.geomont.qc.ca/nouvelles/
 - Contact et demande de soumission : https://www.geomont.qc.ca/nous-joindre/
 
 ## Réponses courtes

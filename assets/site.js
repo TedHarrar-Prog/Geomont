@@ -7,7 +7,7 @@
     '<a class="skip-link" href="#main">Passer au contenu</a>',
     '<header class="site-header">',
       '<div class="shell nav-wrap">',
-        '<a class="brand" href="/" aria-label="Géomont — Accueil">Géo <b>Mont</b></a>',
+        '<a class="brand" href="/" aria-label="GéoMont — Accueil">Géo<b>Mont</b></a>',
         '<nav class="nav-links" aria-label="Navigation principale">',
           '<div class="services-drop">',
             '<a class="services-link" data-nav="services" href="/services/">Services</a>',
@@ -16,6 +16,7 @@
           '<a class="nav-link" data-nav="donnees" href="/donnees-cartes/">Données &amp; cartes</a>',
           '<a class="nav-link" data-nav="projets" href="/projets/">Projets</a>',
           '<a class="nav-link" data-nav="ressources" href="/ressources/">Ressources</a>',
+          '<a class="nav-link" data-nav="nouvelles" href="/nouvelles/">Nouvelles</a>',
           '<a class="nav-link" data-nav="apropos" href="/a-propos/">À propos</a>',
         '</nav>',
         '<a class="top-cta" href="/nous-joindre/">Parler à un expert</a>',
@@ -26,6 +27,7 @@
         '<a href="/donnees-cartes/">Données &amp; cartes</a>',
         '<a href="/projets/">Projets</a>',
         '<a href="/ressources/">Ressources</a>',
+        '<a href="/nouvelles/">Nouvelles</a>',
         '<a href="/a-propos/">À propos</a>',
         '<a class="button yellow" href="/nous-joindre/">Parler à un expert</a>',
       '</nav>',
@@ -55,7 +57,7 @@
   const footer = [
     '<footer class="site-footer">',
       '<div class="shell footer-main">',
-        '<div><a class="footer-brand" href="/">Géo <b>Mont</b></a><p class="footer-intro">Données, analyses et cartes pour mieux comprendre et décider sur votre territoire.</p></div>',
+        '<div><a class="footer-brand" href="/">Géo<b>Mont</b></a><p class="footer-intro">Données, analyses et cartes pour mieux comprendre et décider sur votre territoire.</p></div>',
         '<div class="footer-col"><h2>Explorer</h2><a href="/services/">Services</a><a href="/donnees-cartes/">Données &amp; cartes</a><a href="/projets/">Projets</a><a href="/domaines/">Domaines</a></div>',
         '<div class="footer-col"><h2>Ressources</h2><a href="/ressources/">Formations &amp; soutien</a><a href="/faq/">FAQ géomatique</a><a href="/a-propos/">À propos</a><a href="https://info-sols.ca/" target="_blank" rel="noopener">Info-Sols</a></div>',
         '<div class="footer-col"><h2>Nous joindre</h2><a href="tel:+14509561036">450 956-1036</a><a href="mailto:info@geomont.qc.ca">info@geomont.qc.ca</a><a href="/nous-joindre/">Demander une soumission</a></div>',
@@ -144,14 +146,13 @@
 
   function buildPartnerBand(group) {
     const section = document.createElement('section');
-    section.className = 'section compact partner-band';
-    section.setAttribute('aria-label', group.eyebrow);
+    section.className = 'partner-band';
+    section.setAttribute('aria-label', 'Logos des organisations partenaires');
     const logoItems = group.marks.map(function (mark) {
-      return '<div class="partner-logo"><img src="/assets/logos/' + mark.file + '" alt="" loading="lazy"><span>' + mark.name + '</span></div>';
+      return '<div class="partner-logo"><img src="/assets/logos/' + mark.file + '" alt="' + mark.name + '" loading="lazy"></div>';
     }).join('');
     section.innerHTML = [
       '<div class="shell">',
-        '<div class="section-head"><div><p class="eyebrow">', group.eyebrow, '</p><h2 class="display">', group.title, '</h2></div><p class="section-intro">', group.intro, '</p></div>',
         '<div class="partner-marquee" role="region" aria-label="Logos des organisations partenaires" tabindex="0">',
           '<div class="partner-track"><div class="partner-group">', logoItems, '</div><div class="partner-group" aria-hidden="true">', logoItems, '</div></div>',
         '</div>',
