@@ -149,7 +149,7 @@
     section.className = 'partner-band';
     section.setAttribute('aria-label', 'Logos des organisations partenaires');
     const logoItems = group.marks.map(function (mark) {
-      return '<div class="partner-logo"><img src="/assets/logos/' + mark.file + '" alt="' + mark.name + '" loading="lazy"></div>';
+      return '<div class="partner-logo"><img src="/assets/logos/' + mark.file + '" alt="' + mark.name + '" loading="eager" decoding="async"></div>';
     }).join('');
     section.innerHTML = [
       '<div class="shell">',
