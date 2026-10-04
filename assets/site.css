@@ -406,17 +406,17 @@ button { cursor: pointer; }
 .step-number { color: var(--green); font-size: .75rem; font-weight: 850; letter-spacing: .13em; }
 .step h3 { margin: 0 0 4px; font-size: 1.12rem; letter-spacing: -.02em; }
 .step p { margin: 0; color: var(--muted); }
-.partner-band { overflow: hidden; padding: 24px 0; background: #24483e; }
+.partner-band { overflow: hidden; padding: 24px 0; background: #bdc9bf; }
 .partner-band .shell { max-width: none; }
 .partner-marquee { position: relative; overflow: hidden; padding: 3px 0; }
 .partner-marquee::before, .partner-marquee::after { position: absolute; z-index: 1; top: 0; bottom: 0; width: clamp(20px, 5vw, 72px); content: ""; pointer-events: none; }
-.partner-marquee::before { left: 0; background: linear-gradient(90deg, #24483e, transparent); }
-.partner-marquee::after { right: 0; background: linear-gradient(270deg, #24483e, transparent); }
+.partner-marquee::before { left: 0; background: linear-gradient(90deg, #bdc9bf, transparent); }
+.partner-marquee::after { right: 0; background: linear-gradient(270deg, #bdc9bf, transparent); }
 .partner-track { display: flex; width: max-content; animation: partner-scroll 48s linear infinite; }
 .partner-marquee:hover .partner-track, .partner-marquee:focus-within .partner-track { animation-play-state: paused; }
 .partner-group { display: flex; align-items: center; gap: clamp(38px, 5vw, 76px); padding-right: clamp(38px, 5vw, 76px); }
 .partner-logo { display: flex; width: clamp(150px, 16vw, 220px); height: 90px; flex: 0 0 auto; align-items: center; justify-content: center; }
-.partner-logo img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(1) brightness(0) invert(1); opacity: .9; }
+.partner-logo img { width: 100%; height: 100%; object-fit: contain; filter: grayscale(1) contrast(1.12); opacity: .92; }
 @keyframes partner-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .partner-track { animation: none; } }
 
