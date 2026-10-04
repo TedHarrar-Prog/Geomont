@@ -255,7 +255,7 @@ button { cursor: pointer; }
 }
 .hero .shell { position: relative; z-index: 1; }
 .hero.home { min-height: min(680px, calc(100vh - 80px)); display: grid; align-items: center; }
-.hero-copy { max-width: 850px; }
+.hero-copy { max-width: 1120px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 .breadcrumb {
   display: flex;
@@ -502,7 +502,6 @@ button { cursor: pointer; }
   .footer-col:last-child { grid-column: 2; }
 }
 @media (max-width: 1040px) {
-  :root { --content: min(100% - 40px, 1480px); }
   .nav-links, .top-cta { display: none; }
   .menu-button { display: block; }
   .mobile-menu {
@@ -520,6 +519,9 @@ button { cursor: pointer; }
   .mobile-menu a { padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.91); font-weight: 720; }
   .mobile-menu .button { margin-top: 12px; }
   .mega-menu { display: none !important; }
+}
+@media (max-width: 780px) {
+  :root { --content: min(100% - 40px, 1480px); }
   .hero.home { min-height: auto; }
   .section-head, .two-col, .contact-grid { grid-template-columns: 1fr; gap: 24px; }
   .section-head { margin-bottom: 30px; }
