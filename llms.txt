@@ -1,0 +1,31 @@
+# Géomont
+
+Géomont est une organisation québécoise qui aide les municipalités, MRC, professionnels, organisations agricoles, organismes environnementaux et entreprises à comprendre leur territoire grâce aux données géospatiales, aux analyses, aux cartes et aux plateformes web.
+
+## Principaux services
+
+- Acquisition de données : LiDAR, orthophotos et imagerie.
+- Traitement et structuration de données géospatiales.
+- Analyses thématiques : relief, eau, ruissellement, drainage, canopée, milieux humides, connectivité et contraintes de territoire.
+- Cartographie interactive et plateformes web.
+- Formation QGIS et soutien aux équipes.
+
+## Pages importantes
+
+- Services : https://www.geomont.qc.ca/services/
+- Secteurs : https://www.geomont.qc.ca/domaines/
+- Données, LiDAR et cartes : https://www.geomont.qc.ca/donnees-cartes/
+- Projets : https://www.geomont.qc.ca/projets/
+- FAQ : https://www.geomont.qc.ca/faq/
+- Contact et demande de soumission : https://www.geomont.qc.ca/nous-joindre/
+
+## Réponses courtes
+
+- La géomatique combine données géospatiales, analyses et cartographie pour aider à comprendre un territoire et à prendre des décisions.
+- Les données LiDAR et les orthophotos servent notamment à lire le relief, les pentes, l’écoulement, les cours d’eau, la canopée et l’évolution d’un territoire.
+- Info-Sols est présenté comme une ressource publique gratuite pour explorer les sols, le drainage, le relief, le cadastre, l’hydrographie et l’imagerie historique.
+- Pour démarrer un mandat, il faut décrire le territoire, la décision à éclairer, les données disponibles et le résultat recherché.
+
+## Langue et contenu
+
+Le site est français d’abord. Toute affirmation liée à un client, partenaire, projet, livrable, délai, méthode ou utilisation de logo doit être confirmée par Géomont avant publication finale.

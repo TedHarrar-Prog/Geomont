@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Géomont">
+  <rect width="64" height="64" fill="#113a34"/>
+  <path d="M8 41c9-12 17-15 25-10 8 5 14 1 23-11v16c-9 12-17 15-25 10-8-5-14-1-23 11V41Z" fill="#e3bd2b"/>
+  <circle cx="32" cy="23" r="7" fill="#33a06e"/>
+</svg>
