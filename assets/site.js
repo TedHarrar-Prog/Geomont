@@ -2,8 +2,10 @@
   const headerMount = document.querySelector('[data-site-header]');
   const footerMount = document.querySelector('[data-site-footer]');
   const currentPage = document.body.dataset.page || '';
+  const isEnglish = document.body.dataset.locale === 'en';
+  const currentFrenchPath = isEnglish ? (document.body.dataset.frPath || '/') : location.pathname;
 
-  const header = [
+  let header = [
     '<a class="skip-link" href="#main">Passer au contenu</a>',
     '<header class="site-header">',
       '<div class="shell nav-wrap">',
@@ -19,7 +21,7 @@
           '<a class="nav-link" data-nav="nouvelles" href="/nouvelles/">Nouvelles</a>',
           '<a class="nav-link" data-nav="apropos" href="/a-propos/">À propos</a>',
         '</nav>',
-        '<a class="top-cta" href="/nous-joindre/">Parler à un expert</a>',
+        '<div class="header-actions"><a class="lang-switch" data-language-switch href="#" aria-label="English">EN</a><a class="top-cta" href="/nous-joindre/">Parler à un expert</a></div>',
         '<button class="menu-button" type="button" aria-label="Ouvrir le menu" aria-expanded="false"><span></span></button>',
       '</div>',
       '<nav class="mobile-menu" hidden aria-label="Navigation mobile">',
@@ -29,6 +31,7 @@
         '<a href="/ressources/">Ressources</a>',
         '<a href="/nouvelles/">Nouvelles</a>',
         '<a href="/a-propos/">À propos</a>',
+        '<a class="mobile-language-link" data-language-switch href="#">English (EN)</a>',
         '<a class="button yellow" href="/nous-joindre/">Parler à un expert</a>',
       '</nav>',
       '<div id="megaMenu" class="mega-menu" aria-label="Services">',
@@ -54,7 +57,7 @@
     '</header>'
   ].join('');
 
-  const footer = [
+  let footer = [
     '<footer class="site-footer">',
       '<div class="shell footer-main">',
         '<div><a class="footer-brand" href="/">Géo<b>Mont</b></a><p class="footer-intro">Données, analyses et cartes pour mieux comprendre et décider sur votre territoire.</p></div>',
@@ -66,8 +69,59 @@
     '</footer>'
   ].join('');
 
+  const routes = {
+    '/':'/en/','/a-propos/':'/en/about/','/domaines/':'/en/sectors/',
+    '/domaines/agriculture/':'/en/sectors/agriculture/','/domaines/arpenteurs-geometres/':'/en/sectors/land-surveyors/',
+    '/domaines/genie-environnement/':'/en/sectors/engineering-environment/','/domaines/mrc/':'/en/sectors/rmcs/',
+    '/domaines/municipalites/':'/en/sectors/municipalities/','/domaines/obnl-organismes-environnementaux/':'/en/sectors/nonprofits-environment/',
+    '/domaines/promoteurs-acquisitions/':'/en/sectors/developers-acquisitions/','/domaines/services-publics-reseaux/':'/en/sectors/utilities-networks/',
+    '/domaines/urbanistes-conseils/':'/en/sectors/planning-consultants/','/donnees-cartes/':'/en/data-maps/',
+    '/faq/':'/en/faq/','/nous-joindre/':'/en/contact/','/nouvelles/':'/en/news/','/projets/':'/en/projects/',
+    '/ressources/':'/en/resources/','/services/':'/en/services/','/services/acquisition-de-donnees/':'/en/services/data-acquisition/',
+    '/services/analyses-thematiques/':'/en/services/thematic-analysis/','/services/cartographie-plateformes-web/':'/en/services/mapping-web-platforms/',
+    '/services/formation-soutien/':'/en/services/training-support/','/services/traitement-de-donnees/':'/en/services/data-processing/'
+  };
+  const englishChrome = [
+    ['Passer au contenu','Skip to content'],['Navigation principale','Main navigation'],['Ouvrir le menu Services','Open the Services menu'],['Services','Services'],
+    ['Données &amp; cartes','Data &amp; maps'],['Projets','Projects'],['Ressources','Resources'],['Nouvelles','News'],['À propos','About'],
+    ['Parler à un expert','Speak with an expert'],['Ouvrir le menu','Open menu'],['Navigation mobile','Mobile navigation'],
+    ['Par secteur','By sector'],['Par expertise','By expertise'],['MRC','MRCs'],['Municipalités','Municipalities'],
+    ['Acquisitions régionales, analyses et cartes web.','Regional acquisitions, analysis and web maps.'],
+    ['Règlements, permis et priorités environnementales.','Bylaws, permits and environmental priorities.'],
+    ['Urbanistes-conseils','Planning consultants'],['Portrait territorial d’un lot et préanalyse.','Site context and preliminary analysis.'],
+    ['Promoteurs &amp; acquisitions','Developers &amp; acquisitions'],['Contraintes d’un terrain avant une offre.','Site constraints before an offer.'],
+    ['Arpenteurs-géomètres','Land surveyors'],['Contexte topographique et historique.','Topographic and historical context.'],
+    ['Voir tous les secteurs →','View all sectors →'],['Acquisition de données','Data acquisition'],['LiDAR, orthophotos et partenariats.','LiDAR, orthophotos and partnerships.'],
+    ['Traitement de données','Data processing'],['Des jeux propres et documentés.','Clean, documented datasets.'],['Analyses thématiques','Thematic analysis'],
+    ['Répondre à une question territoriale précise.','Answer a specific land-use question.'],['Cartographie &amp; plateformes web','Mapping &amp; web platforms'],
+    ['Partager les bonnes informations.','Share the right information.'],['Formation &amp; soutien','Training &amp; support'],['Rendre les équipes plus autonomes.','Help teams work more independently.'],
+    ['La donnée territoriale, transformée en décision.','Geospatial data turned into decisions.'],
+    ['Une ressource publique, des données et un accompagnement adapté à votre projet.','A public resource, data and support tailored to your project.'],
+    ['Découvrir les données','Explore the data'],['Explorer','Explore'],['Domaines','Sectors'],['Formations &amp; soutien','Training &amp; support'],
+    ['FAQ géomatique','Geomatics FAQ'],['Nous joindre','Contact'],['Demander une soumission','Request a quote'],
+    ['Données, analyses et cartes pour mieux comprendre et décider sur votre territoire.','Data, analysis and maps to help you understand your region and make informed decisions.'],
+    ['© 2026 Géomont. Maquette V5.','© 2026 GéoMont. Website preview.'],['Français d’abord · Anglais en phase 2','French · English']
+  ];
+  function englishCopy(markup) {
+    englishChrome.forEach(function (pair) { markup = markup.split(pair[0]).join(pair[1]); });
+    return markup;
+  }
+  if (isEnglish) { header = englishCopy(header); footer = englishCopy(footer); }
   if (headerMount) headerMount.innerHTML = header;
   if (footerMount) footerMount.innerHTML = footer;
+
+  const englishPath = routes[currentFrenchPath] || '/en/';
+  document.querySelectorAll('[data-language-switch]').forEach(function (link) {
+    link.href = isEnglish ? currentFrenchPath : englishPath;
+    link.textContent = isEnglish ? (link.classList.contains('mobile-language-link') ? 'Français (FR)' : 'FR') : (link.classList.contains('mobile-language-link') ? 'English (EN)' : 'EN');
+    link.setAttribute('aria-label', isEnglish ? 'Français' : 'English');
+  });
+  if (isEnglish) {
+    document.querySelectorAll('a[href]').forEach(function (link) {
+      const target = routes[link.getAttribute('href')];
+      if (target) link.setAttribute('href', target);
+    });
+  }
 
   const clientLogos = {
     brome: { name: 'MRC de Brome-Missisquoi', kind: 'MRC · Estrie', file: 'MRC_Brome-Missisquoi-2022-RVB.svg' },
@@ -117,13 +171,13 @@
   function buildPartnerBand(group) {
     const section = document.createElement('section');
     section.className = 'partner-band';
-    section.setAttribute('aria-label', 'Logos des organisations partenaires');
+    section.setAttribute('aria-label', isEnglish ? 'Partner organization logos' : 'Logos des organisations partenaires');
     const logoItems = group.marks.map(function (mark) {
       return '<div class="partner-logo"><img src="/assets/logos/' + mark.file + '" alt="' + mark.name + '" loading="eager" decoding="async"></div>';
     }).join('');
     section.innerHTML = [
       '<div class="shell">',
-        '<div class="partner-marquee" role="region" aria-label="Logos des organisations partenaires" tabindex="0">',
+        '<div class="partner-marquee" role="region" aria-label="' + (isEnglish ? 'Partner organization logos' : 'Logos des organisations partenaires') + '" tabindex="0">',
           '<div class="partner-track"><div class="partner-group">', logoItems, '</div><div class="partner-group" aria-hidden="true">', logoItems, '</div></div>',
         '</div>',
       '</div>'
@@ -188,12 +242,16 @@
       const output = form.querySelector('[data-form-result]');
       if (output) {
         output.hidden = false;
-        output.textContent = 'Aperçu seulement : aucune information n’a été transmise. Le site final acheminera cette demande à la bonne personne.';
+        output.textContent = isEnglish ? 'Preview only: no information has been sent. The final site will route your request to the right person.' : 'Aperçu seulement : aucune information n’a été transmise. Le site final acheminera cette demande à la bonne personne.';
       }
     });
   });
 
   const consent = document.querySelector('[data-consent]');
+  if (consent && isEnglish) {
+    consent.setAttribute('aria-label', 'Privacy preferences');
+    consent.innerHTML = '<strong>Your privacy preferences</strong><p>This preview includes consent settings in accordance with Québec’s Law 25 before analytics or advertising.</p><div class="consent-actions"><button class="button line" type="button" data-consent-options>Learn more</button><button class="button primary" type="button" data-consent-accept>Accept all</button></div>';
+  }
   if (consent && sessionStorage.getItem('geomont-consent-preview') === 'accepted') consent.hidden = true;
   document.querySelectorAll('[data-consent-accept]').forEach(function (button) {
     button.addEventListener('click', function () {
@@ -204,7 +262,7 @@
   document.querySelectorAll('[data-consent-options]').forEach(function (button) {
     button.addEventListener('click', function () {
       if (consent) {
-        consent.innerHTML = '<strong>Préférences de confidentialité</strong><p>La version finale offrira des choix séparés pour les témoins nécessaires, de mesure d’audience et de marketing.</p><div class="consent-actions"><button class="button primary" type="button" data-consent-accept>Fermer</button></div>';
+        consent.innerHTML = isEnglish ? '<strong>Privacy preferences</strong><p>The full site will offer separate choices for necessary, analytics and marketing cookies.</p><div class="consent-actions"><button class="button primary" type="button" data-consent-accept>Close</button></div>' : '<strong>Préférences de confidentialité</strong><p>La version finale offrira des choix séparés pour les témoins nécessaires, de mesure d’audience et de marketing.</p><div class="consent-actions"><button class="button primary" type="button" data-consent-accept>Fermer</button></div>';
         consent.querySelector('[data-consent-accept]').addEventListener('click', function () { consent.hidden = true; });
       }
     });
