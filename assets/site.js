@@ -118,6 +118,7 @@
   });
   if (isEnglish) {
     document.querySelectorAll('a[href]').forEach(function (link) {
+      if (link.matches('[data-language-switch]')) return;
       const target = routes[link.getAttribute('href')];
       if (target) link.setAttribute('href', target);
     });
