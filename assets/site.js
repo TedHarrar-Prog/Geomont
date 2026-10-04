@@ -68,15 +68,15 @@
   if (footerMount) footerMount.innerHTML = footer;
 
   const clientLogos = {
-    brome: { name: 'MRC de Brome-Missisquoi', kind: 'MRC cliente · Estrie' },
-    sources: { name: 'MRC des Sources', kind: 'MRC cliente · Estrie' },
-    roussillon: { name: 'MRC de Roussillon', kind: 'MRC cliente · Montérégie' },
-    marguerite: { name: 'MRC de Marguerite-D’Youville', kind: 'MRC cliente · Montérégie' },
-    vaudreuil: { name: 'MRC de Vaudreuil-Soulanges', kind: 'MRC cliente · Montérégie' },
-    granby: { name: 'Ville de Granby', kind: 'Municipalité cliente' },
-    crem: { name: 'CRE de la Montérégie', kind: 'Organisme environnemental client' },
-    maska: { name: 'Agri Conseils Maska', kind: 'Organisation agricole cliente' },
-    fusion: { name: 'Agri-Fusion', kind: 'Organisation agricole cliente' }
+    brome: { name: 'MRC de Brome-Missisquoi', kind: 'MRC · Estrie', file: 'MRC_Brome-Missisquoi-2022-RVB.svg' },
+    sources: { name: 'MRC des Sources', kind: 'MRC · Estrie', file: 'mrc-des-sources.svg' },
+    roussillon: { name: 'MRC de Roussillon', kind: 'MRC · Montérégie', file: 'mrc-roussillon.svg' },
+    marguerite: { name: 'MRC de Marguerite-D’Youville', kind: 'MRC · Montérégie', file: 'mrc-marguerite-dyouville.svg' },
+    vaudreuil: { name: 'MRC de Vaudreuil-Soulanges', kind: 'MRC · Montérégie', file: 'mrc-vaudreuil-soulanges.png' },
+    granby: { name: 'Ville de Granby', kind: 'Municipalité', file: 'ville-granby.svg' },
+    crem: { name: 'CRE de la Montérégie', kind: 'Organisme environnemental', file: 'cre-monteregie.png' },
+    maska: { name: 'Agri Conseils Maska', kind: 'Organisation agricole', file: 'agri-conseils-maska.png' },
+    fusion: { name: 'Agri-Fusion', kind: 'Organisation agricole', file: 'agri-fusion.png' }
   };
 
   const partnerGroups = {
@@ -144,33 +144,28 @@
 
   function buildPartnerBand(group) {
     const section = document.createElement('section');
-    section.className = 'section compact partner-band partner-count-' + group.marks.length;
+    section.className = 'section compact partner-band';
     section.setAttribute('aria-label', group.eyebrow);
+    const logoItems = group.marks.map(function (mark) {
+      return '<div class="partner-logo"><img src="/assets/logos/' + mark.file + '" alt="" loading="lazy"><span>' + mark.name + '</span></div>';
+    }).join('');
     section.innerHTML = [
       '<div class="shell">',
         '<div class="section-head"><div><p class="eyebrow">', group.eyebrow, '</p><h2 class="display">', group.title, '</h2></div><p class="section-intro">', group.intro, '</p></div>',
-        '<div class="partner-grid">', group.marks.map(function (mark) {
-          return '<div class="partner-mark"><span class="partner-status" aria-label="Statut : à confirmer">À confirmer</span><div class="partner-logo-placeholder" role="img" aria-label="Emplacement réservé pour le logo de ' + mark.name + '"><span>Logo</span></div><span class="partner-name">' + mark.name + '</span><span class="partner-kind">' + mark.kind + '</span></div>';
-        }).join(''), '</div>',
-        '<p class="partner-note">Maquette V5 — les marques tierces sont remplacées par des emplacements neutres « Logo ». Les organisations et les associations affichées demeurent à confirmer par Géomont avant publication finale.</p>',
+        '<div class="partner-marquee" role="region" aria-label="Logos des organisations partenaires" tabindex="0">',
+          '<div class="partner-track"><div class="partner-group">', logoItems, '</div><div class="partner-group" aria-hidden="true">', logoItems, '</div></div>',
+        '</div>',
       '</div>'
     ].join('');
     return section;
   }
 
-  const partnerSet = document.body.dataset.partnerSet;
+  const partnerSet = document.body.dataset.partnerSet || 'home';
   const main = document.querySelector('main');
-  if (partnerSet && main && partnerGroups[partnerSet]) {
+  if (main && partnerGroups[partnerSet]) {
     const band = buildPartnerBand(partnerGroups[partnerSet]);
-    const ctaBand = main.querySelector('.section.dark');
-    if (partnerSet === 'home') {
-      const hero = main.querySelector('.hero');
-      if (hero) hero.insertAdjacentElement('afterend', band);
-    } else if (ctaBand) {
-      ctaBand.insertAdjacentElement('beforebegin', band);
-    } else {
-      main.appendChild(band);
-    }
+    const hero = main.querySelector('.hero');
+    if (hero) hero.insertAdjacentElement('afterend', band);
   }
 
   const navName = currentPage === 'domaines' || currentPage === 'sector' || currentPage === 'service-detail' ? 'services' : currentPage;
