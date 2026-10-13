@@ -65,7 +65,7 @@
         '<div class="footer-col"><h2>Ressources</h2><a href="/ressources/">Formations &amp; soutien</a><a href="/faq/">FAQ géomatique</a><a href="/a-propos/">À propos</a><a href="https://info-sols.ca/" target="_blank" rel="noopener">Info-Sols</a></div>',
         '<div class="footer-col"><h2>Nous joindre</h2><a href="tel:+14509561036">450 956-1036</a><a href="mailto:info@geomont.qc.ca">info@geomont.qc.ca</a><a href="/nous-joindre/">Demander une soumission</a></div>',
       '</div>',
-      '<div class="shell footer-bottom"><span>© 2026 Géomont. Maquette V5.</span><span>Français d’abord · Anglais en phase 2</span></div>',
+      '<div class="shell footer-bottom"><span>© 2026 GéoMont</span><button class="footer-cookie-settings" type="button" data-consent-reopen>Paramètres des témoins</button></div>',
     '</footer>'
   ].join('');
 
@@ -100,7 +100,7 @@
     ['Découvrir les données','Explore the data'],['Explorer','Explore'],['Domaines','Sectors'],['Formations &amp; soutien','Training &amp; support'],
     ['FAQ géomatique','Geomatics FAQ'],['Nous joindre','Contact'],['Demander une soumission','Request a quote'],
     ['Données, analyses et cartes pour mieux comprendre et décider sur votre territoire.','Data, analysis and maps to help you understand your region and make informed decisions.'],
-    ['© 2026 Géomont. Maquette V5.','© 2026 GéoMont. Website preview.'],['Français d’abord · Anglais en phase 2','French · English']
+    ['Paramètres des témoins','Cookie settings']
   ];
   function englishCopy(markup) {
     englishChrome.forEach(function (pair) { markup = markup.split(pair[0]).join(pair[1]); });
@@ -129,9 +129,9 @@
     sources: { name: 'MRC des Sources', kind: 'MRC · Estrie', file: 'mrc-des-sources.svg' },
     roussillon: { name: 'MRC de Roussillon', kind: 'MRC · Montérégie', file: 'mrc-roussillon.svg' },
     marguerite: { name: 'MRC de Marguerite-D’Youville', kind: 'MRC · Montérégie', file: 'mrc-marguerite-dyouville.svg' },
-    vaudreuil: { name: 'MRC de Vaudreuil-Soulanges', kind: 'MRC · Montérégie', file: 'mrc-vaudreuil-soulanges.png' },
+    vaudreuil: { name: 'MRC de Vaudreuil-Soulanges', kind: 'MRC · Montérégie', file: 'mrc-vaudreuil-soulanges-banner.png' },
     granby: { name: 'Ville de Granby', kind: 'Municipalité', file: 'ville-granby.svg' },
-    crem: { name: 'CRE de la Montérégie', kind: 'Organisme environnemental', file: 'cre-monteregie.png' },
+    crem: { name: 'CRE de la Montérégie', kind: 'Organisme environnemental', file: 'cre-monteregie-banner.png' },
     maska: { name: 'Agri Conseils Maska', kind: 'Organisation agricole', file: 'agri-conseils-maska.png' },
     fusion: { name: 'Agri-Fusion', kind: 'Organisation agricole', file: 'agri-fusion.png' }
   };
@@ -248,24 +248,99 @@
     });
   });
 
-  const consent = document.querySelector('[data-consent]');
-  if (consent && isEnglish) {
-    consent.setAttribute('aria-label', 'Privacy preferences');
-    consent.innerHTML = '<strong>Your privacy preferences</strong><p>This preview includes consent settings in accordance with Québec’s Law 25 before analytics or advertising.</p><div class="consent-actions"><button class="button line" type="button" data-consent-options>Learn more</button><button class="button primary" type="button" data-consent-accept>Accept all</button></div>';
+  const consentStorageKey = 'geomont-cookie-preferences-v1';
+  const consentPanel = document.createElement('aside');
+  consentPanel.className = 'consent';
+  consentPanel.dataset.consent = '';
+  consentPanel.setAttribute('role', 'dialog');
+  consentPanel.setAttribute('aria-modal', 'false');
+  consentPanel.setAttribute('aria-labelledby', 'consent-title');
+  consentPanel.hidden = true;
+  document.body.appendChild(consentPanel);
+
+  const consentLabels = isEnglish ? {
+    aria: 'Cookie preferences', title: 'Your privacy choices',
+    intro: 'Choose whether GéoMont may use optional cookies. Essential cookies keep the site working and remember your choice.',
+    details: 'Cookie preferences', detailCopy: 'Essential cookies are always on. Optional categories remain off unless you choose to enable them.',
+    essential: 'Essential cookies', essentialDesc: 'Required for site operation and saving your preferences.',
+    analytics: 'Analytics cookies', analyticsDesc: 'Help us understand how visitors use the site.',
+    marketing: 'Marketing cookies', marketingDesc: 'Used to measure and tailor marketing.',
+    always: 'Always active', all: 'Accept all', detailButton: 'Details', accept: 'Accept', deny: 'Deny',
+    settings: 'Cookie settings'
+  } : {
+    aria: 'Préférences des témoins', title: 'Vos choix de confidentialité',
+    intro: 'Choisissez si GéoMont peut utiliser des témoins facultatifs. Les témoins nécessaires assurent le fonctionnement du site et mémorisent votre choix.',
+    details: 'Préférences des témoins', detailCopy: 'Les témoins nécessaires sont toujours actifs. Les catégories facultatives restent désactivées jusqu’à votre choix.',
+    essential: 'Témoins nécessaires', essentialDesc: 'Requis pour le fonctionnement du site et la sauvegarde de vos préférences.',
+    analytics: 'Témoins de mesure d’audience', analyticsDesc: 'Aident à comprendre l’utilisation du site.',
+    marketing: 'Témoins de marketing', marketingDesc: 'Servent à mesurer et à personnaliser les communications marketing.',
+    always: 'Toujours actifs', all: 'Tout accepter', detailButton: 'Détails', accept: 'Accepter', deny: 'Refuser',
+    settings: 'Paramètres des témoins'
+  };
+  consentPanel.setAttribute('aria-label', consentLabels.aria);
+
+  function readConsentPreferences() {
+    try {
+      const raw = localStorage.getItem(consentStorageKey);
+      if (!raw) return null;
+      const saved = JSON.parse(raw);
+      if (saved.version !== 1 || typeof saved.analytics !== 'boolean' || typeof saved.marketing !== 'boolean') return null;
+      return { necessary: true, analytics: saved.analytics, marketing: saved.marketing };
+    } catch (error) { return null; }
   }
-  if (consent && sessionStorage.getItem('geomont-consent-preview') === 'accepted') consent.hidden = true;
-  document.querySelectorAll('[data-consent-accept]').forEach(function (button) {
+
+  function notifyConsent(preferences, decision) {
+    const record = { version: 1, necessary: true, analytics: preferences.analytics, marketing: preferences.marketing, decision: decision, updatedAt: new Date().toISOString() };
+    try { localStorage.setItem(consentStorageKey, JSON.stringify(record)); } catch (error) { /* Keep the choice active for this page even if storage is unavailable. */ }
+    consentPanel.hidden = true;
+    window.dispatchEvent(new CustomEvent('geomont:consent-change', { detail: record }));
+  }
+
+  function renderConsent(view, preferences) {
+    const prefs = preferences || { necessary: true, analytics: false, marketing: false };
+    consentPanel.hidden = false;
+    if (view === 'details') {
+      consentPanel.innerHTML = [
+        '<div class="consent-heading"><h2 id="consent-title" tabindex="-1">', consentLabels.details, '</h2><p>', consentLabels.detailCopy, '</p></div>',
+        '<div class="consent-categories">',
+          '<label class="consent-category"><span><strong>', consentLabels.essential, '</strong><small>', consentLabels.essentialDesc, '</small></span><span class="consent-category-state"><small>', consentLabels.always, '</small><input type="checkbox" checked disabled aria-label="', consentLabels.essential, ' — ', consentLabels.always, '"></span></label>',
+          '<label class="consent-category"><span><strong>', consentLabels.analytics, '</strong><small>', consentLabels.analyticsDesc, '</small></span><input type="checkbox" data-consent-analytics', prefs.analytics ? ' checked' : '', '></label>',
+          '<label class="consent-category"><span><strong>', consentLabels.marketing, '</strong><small>', consentLabels.marketingDesc, '</small></span><input type="checkbox" data-consent-marketing', prefs.marketing ? ' checked' : '', '></label>',
+        '</div>',
+        '<div class="consent-actions consent-detail-actions"><button class="button primary" type="button" data-consent-accept-all>', consentLabels.all, '</button><button class="button line" type="button" data-consent-accept-selection>', consentLabels.accept, '</button><button class="button line" type="button" data-consent-deny>', consentLabels.deny, '</button></div>'
+      ].join('');
+      const heading = consentPanel.querySelector('#consent-title');
+      if (heading) heading.focus();
+      return;
+    }
+    consentPanel.innerHTML = [
+      '<div class="consent-heading"><h2 id="consent-title">', consentLabels.title, '</h2><p>', consentLabels.intro, '</p></div>',
+      '<div class="consent-actions"><button class="button primary" type="button" data-consent-accept-all>', consentLabels.all, '</button><button class="button line" type="button" data-consent-options>', consentLabels.detailButton, '</button></div>'
+    ].join('');
+  }
+
+  consentPanel.addEventListener('click', function (event) {
+    const button = event.target.closest('button');
+    if (!button) return;
+    if (button.matches('[data-consent-options]')) {
+      renderConsent('details', readConsentPreferences() || { necessary: true, analytics: false, marketing: false });
+    } else if (button.matches('[data-consent-accept-all]')) {
+      notifyConsent({ analytics: true, marketing: true }, 'accept_all');
+    } else if (button.matches('[data-consent-accept-selection]')) {
+      notifyConsent({
+        analytics: Boolean(consentPanel.querySelector('[data-consent-analytics]')?.checked),
+        marketing: Boolean(consentPanel.querySelector('[data-consent-marketing]')?.checked)
+      }, 'custom');
+    } else if (button.matches('[data-consent-deny]')) {
+      notifyConsent({ analytics: false, marketing: false }, 'deny_optional');
+    }
+  });
+
+  document.querySelectorAll('[data-consent-reopen]').forEach(function (button) {
     button.addEventListener('click', function () {
-      sessionStorage.setItem('geomont-consent-preview', 'accepted');
-      if (consent) consent.hidden = true;
+      renderConsent('details', readConsentPreferences() || { necessary: true, analytics: false, marketing: false });
     });
   });
-  document.querySelectorAll('[data-consent-options]').forEach(function (button) {
-    button.addEventListener('click', function () {
-      if (consent) {
-        consent.innerHTML = isEnglish ? '<strong>Privacy preferences</strong><p>The full site will offer separate choices for necessary, analytics and marketing cookies.</p><div class="consent-actions"><button class="button primary" type="button" data-consent-accept>Close</button></div>' : '<strong>Préférences de confidentialité</strong><p>La version finale offrira des choix séparés pour les témoins nécessaires, de mesure d’audience et de marketing.</p><div class="consent-actions"><button class="button primary" type="button" data-consent-accept>Fermer</button></div>';
-        consent.querySelector('[data-consent-accept]').addEventListener('click', function () { consent.hidden = true; });
-      }
-    });
-  });
+  if (readConsentPreferences()) consentPanel.hidden = true;
+  else renderConsent('notice');
 }());
