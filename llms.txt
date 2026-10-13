@@ -12,6 +12,24 @@ Géomont est une organisation québécoise qui aide les municipalités, MRC, pro
 - Cartographie interactive et plateformes web.
 - Formation QGIS et soutien aux équipes.
 
+## Expérience
+
+- GéoMont cumule plus de 20 ans d’expérience et plus de 1 000 mandats réalisés avec succès.
+
+## English pages
+
+- Home: https://www.geomont.qc.ca/en/
+- Services: https://www.geomont.qc.ca/en/services/
+- Sectors: https://www.geomont.qc.ca/en/sectors/
+- Data and maps: https://www.geomont.qc.ca/en/data-maps/
+- Projects: https://www.geomont.qc.ca/en/projects/
+- News: https://www.geomont.qc.ca/en/news/
+- Contact: https://www.geomont.qc.ca/en/contact/
+
+## Experience
+
+- GéoMont has over 20 years of experience and more than 1,000 mandates successfully completed.
+
 ## Pages importantes
 
 - Services : https://www.geomont.qc.ca/services/

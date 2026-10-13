@@ -607,3 +607,23 @@ button { cursor: pointer; }
   .consent { right: 8px; bottom: 8px; width: calc(100% - 16px); max-height: calc(100vh - 16px); padding: 18px; }
   .footer-bottom { align-items: flex-start; flex-direction: column; gap: 8px; }
 }
+
+.experience-proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  width: fit-content;
+  margin: 22px 0 25px;
+  padding: 11px 16px;
+  border-left: 3px solid var(--yellow, #e4bf43);
+  background: rgba(255, 255, 255, .1);
+  color: inherit;
+  font-size: .94rem;
+  line-height: 1.45;
+}
+.experience-proof strong { font-weight: 750; }
+.experience-proof span { color: inherit; opacity: .88; }
+@media (max-width: 600px) {
+  .experience-proof { gap: 3px 12px; font-size: .88rem; }
+}
