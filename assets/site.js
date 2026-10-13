@@ -311,6 +311,15 @@
       ].join('');
       const heading = consentPanel.querySelector('#consent-title');
       if (heading) heading.focus();
+      const updateDenyAvailability = function () {
+        const anyOptionalSelected = Boolean(consentPanel.querySelector('[data-consent-analytics]')?.checked || consentPanel.querySelector('[data-consent-marketing]')?.checked);
+        const denyButton = consentPanel.querySelector('[data-consent-deny]');
+        if (denyButton) denyButton.disabled = !anyOptionalSelected;
+      };
+      consentPanel.querySelectorAll('[data-consent-analytics], [data-consent-marketing]').forEach(function (input) {
+        input.addEventListener('change', updateDenyAvailability);
+      });
+      updateDenyAvailability();
       return;
     }
     consentPanel.innerHTML = [
@@ -325,14 +334,14 @@
     if (button.matches('[data-consent-options]')) {
       renderConsent('details', readConsentPreferences() || { necessary: true, analytics: false, marketing: false });
     } else if (button.matches('[data-consent-accept-all]')) {
+      consentPanel.querySelectorAll('[data-consent-analytics], [data-consent-marketing]').forEach(function (input) { input.checked = true; });
       notifyConsent({ analytics: true, marketing: true }, 'accept_all');
-    } else if (button.matches('[data-consent-accept-selection]')) {
-      notifyConsent({
+    } else if (button.matches('[data-consent-accept-selection]') || button.matches('[data-consent-deny]')) {
+      const selected = {
         analytics: Boolean(consentPanel.querySelector('[data-consent-analytics]')?.checked),
         marketing: Boolean(consentPanel.querySelector('[data-consent-marketing]')?.checked)
-      }, 'custom');
-    } else if (button.matches('[data-consent-deny]')) {
-      notifyConsent({ analytics: false, marketing: false }, 'deny_optional');
+      };
+      notifyConsent(selected, button.matches('[data-consent-deny]') ? 'accept_selected_reject_unselected' : 'custom');
     }
   });
 
@@ -341,6 +350,13 @@
       renderConsent('details', readConsentPreferences() || { necessary: true, analytics: false, marketing: false });
     });
   });
-  if (readConsentPreferences()) consentPanel.hidden = true;
-  else renderConsent('notice');
+  const consentPanelSeenKey = 'geomont-cookie-panel-seen-v1';
+  let consentPanelSeen = false;
+  try { consentPanelSeen = sessionStorage.getItem(consentPanelSeenKey) === '1'; } catch (error) { /* Session storage can be unavailable in private browsing. */ }
+  if (readConsentPreferences() || consentPanelSeen) {
+    consentPanel.hidden = true;
+  } else {
+    try { sessionStorage.setItem(consentPanelSeenKey, '1'); } catch (error) { /* The panel remains usable without session storage. */ }
+    renderConsent('notice');
+  }
 }());
